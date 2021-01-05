@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import api from "../../services/api";
 import { login } from '../../services/auth';
+import { Alert } from '@material-ui/lab';
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,7 @@ export default function Cadastro() {
     const [email, setEmail] = useState('');
     const [nome, setNome] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('')
     const history = useHistory();
     async function handleSubmit(e) {
         e.preventDefault();
@@ -53,24 +55,25 @@ export default function Cadastro() {
             history.push('/')
         } catch (error) {
             console.log(error.response.data);
-            let mensagemErro = error.response.data.message;
-            if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "password", "updated_at") values ($1, $2, $3, $4, $5) returning "id" - null value in column "cpfUser" violates not-null constraint') { alert('CPF não pode estar em branco') }
-            else if (mensagemErro === '"insert into "users" ("cpfUser", "created_at", "email", "nome", "password", "updated_at") values ($1, $2, $3, $4, $5, $6) returning "id" - duplicate key value violates unique constraint "users_cpfuser_unique"') { alert('CPF não pode estar em branco') }
-            else if (mensagemErro === '"insert into "users" ("cpfUser", "created_at", "email", "nome", "password", "updated_at") values ($1, $2, $3, $4, $5, $6) returning "id" - duplicate key value violates unique constraint "users_email_unique"') { alert('Email já Cadastrado') }
-            else if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "nome", "password", "updated_at") values ($1, $2, $3, $4, $5, $6) returning "id" - duplicate key value violates unique constraint "users_cpfuser_unique"') { alert('CPF já cadastrado') }
-            else if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "password", "updated_at") values ($1, $2, $3, $4, $5) returning "id" - null value in column "email" violates not-null constraint') { alert('Email não pode estar em branco') }
-            else if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "password", "updated_at") values ($1, $2, $3, $4, $5) returning "id" - null value in column "nome" violates not-null constraint') { alert('Nome não pode estar em Branco') }
-            else if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "password", "updated_at") values ($1, $2, $3, $4, $5) returning "id" - null value in column "password" violates not-null constraint') { alert('Senha não pode estar em branco') }
-            else if (mensagemErro === 'insert into "users" ("cpfUser", "created_at", "email", "nome", "password", "updated_at") values ($1, $2, $3, $4, $5, $6) returning "id" - duplicate key value violates unique constraint "users_email_unique"') { alert('Email já Cadastrado') }
+            console.log(error.response.data.message);
+            let mensagemErro = error.response.data.message.error;
+            alert(mensagemErro)
+            setError(mensagemErro)
         }
 
     }
     return (
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
+                {error &&
+                    <Alert severity="error">
+                        {error}
+                    </Alert>}
                 <form className={classes.form} onSubmit={handleSubmit}>
-                    <input
+                    <TextField
                         type="text"
+                        variant="outlined"
+                        fullWidth
                         placeholder='CPF*' minLength='11' maxLength='11' required
                         value={cpfUser}
                         onChange={e => setCpfUser(e.target.value)} autoFocus
@@ -114,22 +117,22 @@ export default function Cadastro() {
                         autoComplete="current-password"
                     />
 
-<Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                >
-                    Cadastre-se
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Cadastre-se
           </Button>
-                <Grid container>
-                    <Grid item>
-                        <Link to="/" variant="body2" className={classes.link}>
-                           Faça o seu login
+                    <Grid container>
+                        <Grid item>
+                            <Link to="/" variant="body2" className={classes.link}>
+                                Faça o seu login
                         </Link>
+                        </Grid>
                     </Grid>
-                </Grid>
                 </form>
             </div>
         </Container>

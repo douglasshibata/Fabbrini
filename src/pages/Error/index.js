@@ -34,7 +34,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://fabbrini.herokuapp.com/">
+            <Link color="inherit" to="https://fabbrini.herokuapp.com/">
                 Fabbrini
         </Link>{' '}
             {new Date().getFullYear()}
@@ -49,12 +49,9 @@ export default function CircularIntegration() {
         <Container>
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
-                    <Typography component="h1" variant="h5">
-                        <ErrorIcon htmlColor='red' />Página Inexistente <ErrorIcon htmlColor='red' />
-                    </Typography>
-                    <Avatar color='red'>
+                    <Avatar >
                         <WarningIcon htmlColor='yellow' />
                     </Avatar>
                     <Typography component="h1" variant="h5">
