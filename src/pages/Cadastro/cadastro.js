@@ -8,6 +8,8 @@ import api from "../../services/api";
 import { login } from '../../services/auth';
 import { Alert } from '@material-ui/lab';
 import { Grid } from '@material-ui/core';
+import ReactLoading from 'react-loading';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,22 +45,34 @@ export default function Cadastro() {
     const [email, setEmail] = useState('');
     const [nome, setNome] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
     const history = useHistory();
     async function handleSubmit(e) {
         e.preventDefault();
         const data = { cpfUser, email, password, nome }
         try {
-            const response = await api.post('/user', data);
-            login(response.data.token);
-            alert('Cadastro Realizado com sucesso')
-            history.push('/')
+            setLoading(true)
+            if(password === confirmPassword){
+                const response = await api.post('/user', data);
+                login(response.data.token);
+                setLoading(false)
+                alert('Cadastro Realizado com sucesso')
+                history.push('/')
+            }else{
+                setLoading(false)
+                setError('Senhas Não conferem')
+            }
         } catch (error) {
+            setLoading(false)
             console.log(error.response.data);
             console.log(error.response.data.message);
-            let mensagemErro = error.response.data.message.error;
-            alert(mensagemErro)
-            setError(mensagemErro)
+            if(error.response.data.message){
+                let mensagemErro = error.response.data.message.error;
+                setError(mensagemErro)
+                alert(mensagemErro)
+            }
         }
 
     }
@@ -69,11 +83,13 @@ export default function Cadastro() {
                     <Alert severity="error">
                         {error}
                     </Alert>}
+                    {loading? <ReactLoading type={'spin'} color={'#123'} height={'20%'} width={'20%'} />:<></>}
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         type="text"
                         variant="outlined"
                         fullWidth
+                        label='CPF'
                         placeholder='CPF*' minLength='11' maxLength='11' required
                         value={cpfUser}
                         onChange={e => setCpfUser(e.target.value)} autoFocus
@@ -114,6 +130,19 @@ export default function Cadastro() {
                         id="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        autoComplete="current-password"
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="ConfirmPassword"
+                        label="Confirme a Senha"
+                        type="password"
+                        id="ConfirmPassword"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
                         autoComplete="current-password"
                     />
 

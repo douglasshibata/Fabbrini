@@ -9,70 +9,70 @@ import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
 import HelpOutlineRoundedIcon from '@material-ui/icons/HelpOutlineRounded';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const ehMedico = localStorage.getItem('ehMedico');
 export const mainListItems = (
   <div>
     <ListItem button>
-      <Button href='/perfil'>
+      <Link to='/perfil'>
         <ListItemIcon>
           <AccountCircleIcon />
         </ListItemIcon>
-        <ListItemText primary="Meu Perfil" /></Button>
+        <ListItemText primary="Meu Perfil" /></Link>
     </ListItem>
     {ehMedico === 'true' ?
       <><ListItem button>
-        <Button href='/main'>
+        <Link to='/main'>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" /></Button>
+          <ListItemText primary="Dashboard" /></Link>
       </ListItem>
         <ListItem button>
-          <Button href='/pacientes'>
+          <Link to='/pacientes'>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Pacientes" /></Button>
+            <ListItemText primary="Pacientes" /></Link>
         </ListItem></> : <div></div>}
     <ListItem button>
-      <Button href='/listaProfissionais'>
+      <Link to='/listaProfissionais'>
         <ListItemIcon>
           <LocalHospitalRoundedIcon />
         </ListItemIcon>
-        <ListItemText primary="Profissionais" /></Button>
+        <ListItemText primary="Profissionais" /></Link>
     </ListItem>
     <ListItem button>
-      <Button href='/agenda'>
+      <Link to='/agenda'>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Agenda" /></Button>
+        <ListItemText primary="Agenda" /></Link>
     </ListItem>
     {ehMedico === 'true' ?
       <>
         <ListItem button>
-          <Button href='/prontuario'>
+          <Link to='/prontuario'>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Prontuário" /></Button>
+            <ListItemText primary="Prontuário" /></Link>
         </ListItem>
       </> : <div></div>}
     <ListItem button>
-      <Button href='/about'>
+      <Link to='/about'>
         <ListItemIcon>
           <InfoRoundedIcon />
         </ListItemIcon>
-        <ListItemText primary="Sobre" /></Button>
+        <ListItemText primary="Sobre" /></Link>
     </ListItem>
     <ListItem button>
-      <Button href='/help'>
+      <Link to='/help'>
         <ListItemIcon>
           <HelpOutlineRoundedIcon />
         </ListItemIcon>
-        <ListItemText primary="Ajuda" /></Button>
+        <ListItemText primary="Ajuda" /></Link>
     </ListItem>
   </div>
 );

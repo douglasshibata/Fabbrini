@@ -8,6 +8,8 @@ import Container from '@material-ui/core/Container';
 import api from "../../services/api";
 import { useHistory } from 'react-router-dom';
 import { login } from '../../services/auth';
+import { Alert } from '@material-ui/lab';
+import ReactLoading from 'react-loading';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +51,9 @@ export default function SignIn() {
     const classes = useStyles();
     const [cpfUser, setCpfUser] = useState('');
     const [password, setPassword] = useState('');
+    const [error,setErro] = useState("");
+    const [loading, setLoading] = useState(false)
+
     const history = useHistory();
     localStorage.setItem('cpfUser', cpfUser);
 
@@ -56,19 +61,24 @@ export default function SignIn() {
         e.preventDefault();
         const data = { cpfUser, password }
         try {
+            setLoading(true)
             const response = await api.post('/sessions', data);
             login(response.data.token);
             history.push('/perfil')
         } catch (error) {
-            if (error.response.data[0].field === 'cpfUser') {
-                alert('CPF não encontrado')
-            } else if (error.response.data[0].field === 'password') alert('Senha inválida')
+            setLoading(false)
+            console.log(error.response);
+            if (error.response.data.message) {
+                setErro(error.response.data.message.error)
+            } else if (error.response.data[0].field === 'password') setErro('Senha inválida')
         }
     }
 
     return (
         <Container component="main" maxWidth="xs">
+            {error&&<Alert  severity='warning' >{error}</Alert>}
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            {loading? <ReactLoading type={'spin'} color={'#123'} height={'20%'} width={'20%'} />:<></>}
                 <input
                     type="text"
                     placeholder='CPF*' minLength='11' maxLength='11' required
