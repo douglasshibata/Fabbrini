@@ -61,7 +61,8 @@ function EditProfile(props) {
       <input type="text" name="telefone" id="telefone" onChange={onChange} value={form.telefone === null ? '' : form.telefone} placeholder="(11) 12345-1234" required />
       {/* <label htmlFor="password">Senha</label>
       <input type="password" name="password" id="password" onChange={onChange} value={form.password === null ? '' : form.password} required />
-       */}<label htmlFor="ativo">Status</label>
+       */}
+       <label htmlFor="ativo">Status</label>
       <Select type="select" name='ativo' id='ativo' fullWidth value={form.ativo} onChange={onChange}>
         <MenuItem value={true}>Ativo</MenuItem>
         <MenuItem value={false} >Inativar</MenuItem>

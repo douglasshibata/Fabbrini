@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     letterSpacing: '0em',
     textAlign: 'left',
-    left: '876px',
-    marginTop: '60px',
     marginBottom: '23px',
     color: '#000000',
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { red } from '@material-ui/core/colors';
-import { Card, Avatar, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { Card, Avatar, CardHeader, CardContent, Typography, Container } from '@material-ui/core';
 import ModalProfile from './ModalProfile'
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
@@ -23,31 +23,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 function DataProfile(props) {
   const classes = useStyles();
-  const pacientes = props.items; 
-
-  return (
-    <Card className={classes.root}>
+  const pacientes = props.items.map((value,index)=>(
+<Card className={classes.root} key={value._id}>
     <CardHeader
-        avatar={<Avatar aria-label={pacientes.nome} className={classes.avatar} />}
-        title={pacientes.nome}
-        subheader={pacientes.email}
+        avatar={<Avatar aria-label={value.nome} className={classes.avatar} />}
+        title={value.nome}
+        subheader={value.email}
     />
     <CardContent>
         <Typography variant="h6" component="h3">
-            <p>CPF: {pacientes.cpfUser}</p>
+            <p>CPF: {value.cpfUser}</p>
         </Typography>
         <Typography variant="h6" component="h3">
-            <p>Nome: {pacientes.nome}</p>
+            <p>Nome: {value.nome}</p>
         </Typography>
         <Typography variant="h6" component="h3">
-            <p>TELEFONE: {pacientes.telefone}</p>
+            <p>TELEFONE: {value.telefone}</p>
         </Typography>
         <Typography variant="h6" component="h3">
-            <p>STATUS: {pacientes.ativo ? `ATIVO` : `INATIVO`}</p>
+            <p>STATUS: {value.ativo ? `ATIVO` : `INATIVO`}</p>
         </Typography>
-        <ModalProfile buttonLabel="Editar" item={pacientes} updateState={props.updateState} />
+        <ModalProfile buttonLabel="Editar" item={value} updateState={props.updateState} />
     </CardContent>
 </Card>
+  )); 
+
+  return (
+    <Container>
+        {pacientes}
+    </Container>
   )
 }
 
