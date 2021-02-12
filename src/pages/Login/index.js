@@ -44,22 +44,25 @@ const useStyles = makeStyles((theme) => ({
         left: '819px',
         top: '334px',
         border: '1px solid #C4C4C4',
+    },
+    loading:{
+        position:'absolute'
     }
 }));
 
 export default function SignIn() {
     const classes = useStyles();
-    const [cpfUser, setCpfUser] = useState('');
-    const [password, setPassword] = useState('');
+    const [cpfNumber, setcpfNumber] = useState('');
+    const [senha, setSenha] = useState('');
     const [error,setErro] = useState("");
     const [loading, setLoading] = useState(false)
 
     const history = useHistory();
-    localStorage.setItem('cpfUser', cpfUser);
+    localStorage.setItem('cpfNumber', cpfNumber);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const data = { cpfUser, password }
+        const data = { cpfNumber, senha }
         try {
             setLoading(true)
             const response = await api.post('/sessions', data);
@@ -78,12 +81,12 @@ export default function SignIn() {
         <Container component="main" maxWidth="xs">
             {error&&<Alert  severity='warning' >{error}</Alert>}
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            {loading? <ReactLoading type={'spin'} color={'#123'} height={'20%'} width={'20%'} />:<></>}
+            {loading? <ReactLoading className={classes.loading} type={'spin'} color={'#6BC4EC'} height={'20%'} width={'20%'} />:<></>}
                 <input
                     type="text"
                     placeholder='CPF*' minLength='11' maxLength='11' required
-                    value={cpfUser}
-                    onChange={e => setCpfUser(e.target.value)}
+                    value={cpfNumber}
+                    onChange={e => setcpfNumber(e.target.value)}
                     className={classes.inputCPF}
                 />
                 <TextField
@@ -91,12 +94,12 @@ export default function SignIn() {
                     margin="normal"
                     required
                     fullWidth
-                    name="password"
+                    name="senha"
                     label="Senha"
                     type="password"
-                    id="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    id="senha"
+                    value={senha}
+                    onChange={e => setSenha(e.target.value)}
                     autoComplete="current-password"
                 />
 
