@@ -13,6 +13,7 @@ import ErrorPage from './pages/Error';
 import About from './pages/About';
 import Help from "./pages/Help";
 import Prontuario from "./pages/Prontuario";
+import DetalheProfissional from "./pages/ListaProfissionais/detalhe";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -38,6 +39,7 @@ const Routes = () => (
       <PrivateRoute path='/agenda' component={Agenda}/> 
       <PrivateRoute path='/perfil' component={Perfil}/>
       <PrivateRoute path='/chat' component={Chat}/>
+      <PrivateRoute path='/detalhes/:id' component={DetalheProfissional}/>
       <PrivateRoute path='/about' component={About}/>
       <PrivateRoute path='/help' component={Help}/>
       <PrivateRoute path='/prontuario' component={Prontuario}/>
