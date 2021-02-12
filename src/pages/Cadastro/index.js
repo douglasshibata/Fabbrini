@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Cadastro from "./cadastro.js";
+import Cadastro from "./register.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
