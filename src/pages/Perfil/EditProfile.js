@@ -10,7 +10,7 @@ function EditProfile(props) {
    // password: '',
     ativo: '',
   })
-  const cpfUser = localStorage.getItem('cpfUser');
+  const cpfNumber = localStorage.getItem('cpfNumber');
 
   const onChange = e => {
     setValues({
@@ -28,7 +28,7 @@ function EditProfile(props) {
         telefone: form.telefone,
        // password: form.password,
         ativo: form.ativo
-      }, { headers: { cpfUser: cpfUser, } });
+      }, { headers: { cpfNumber: cpfNumber, } });
       if (response) setTimeout(function () { alert('Atualizado Com sucesso'); window.location.reload() }, 200)
     } catch (error) {
       console.log(error.response.data.error.message);

@@ -23,34 +23,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 function DataProfile(props) {
   const classes = useStyles();
-  const pacientes = props.items.map((value,index)=>(
-<Card className={classes.root} key={value._id}>
-    <CardHeader
-        avatar={<Avatar aria-label={value.nome} className={classes.avatar} />}
-        title={value.nome}
-        subheader={value.email}
-    />
-    <CardContent>
-        <Typography variant="h6" component="h3">
-            <p>CPF: {value.cpfUser}</p>
-        </Typography>
-        <Typography variant="h6" component="h3">
-            <p>Nome: {value.nome}</p>
-        </Typography>
-        <Typography variant="h6" component="h3">
-            <p>TELEFONE: {value.telefone}</p>
-        </Typography>
-        <Typography variant="h6" component="h3">
-            <p>STATUS: {value.ativo ? `ATIVO` : `INATIVO`}</p>
-        </Typography>
-        <ModalProfile buttonLabel="Editar" item={value} updateState={props.updateState} />
-    </CardContent>
-</Card>
-  )); 
+  const pacientes = props.items
+
 
   return (
     <Container>
-        {pacientes}
+       <Card className={classes.root} key={pacientes._id}>
+    <CardHeader
+        avatar={<Avatar aria-label={pacientes.nome} className={classes.avatar} />}
+        title={pacientes.nome}
+        subheader={pacientes.email}
+        action={
+            <ModalProfile buttonLabel="Editar" item={pacientes} updateState={props.updateState} />
+        }
+    />
+    <CardContent>
+        <Typography variant="h6" component="h3">
+            <p>CPF: {pacientes.cpfNumber}</p>
+        </Typography>
+        <Typography variant="h6" component="h3">
+            <p>Nome: {pacientes.firstName}</p>
+        </Typography>
+        <Typography variant="h6" component="h3">
+            <p>TELEFONE: {pacientes.telefone}</p>
+        </Typography>
+        <Typography variant="h6" component="h3">
+            <p>STATUS: {pacientes.ativo ? `ATIVO` : `INATIVO`}</p>
+        </Typography>
+    </CardContent>
+</Card>
     </Container>
   )
 }

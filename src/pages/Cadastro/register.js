@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import api from "../../services/api";
 import { login } from '../../services/auth';
 import { Alert } from '@material-ui/lab';
-import { Grid } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import ReactLoading from 'react-loading';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,18 +41,29 @@ export default function Cadastro() {
     const classes = useStyles();
     const [cpfNumber, setcpfNumber] = useState('');
     const [email, setEmail] = useState('');
-    const [nome, setNome] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [familyName, setFamilyName] = useState('');
     const [senha, setsenha] = useState('');
     const [confirmsenha, setConfirmsenha] = useState('');
-    const [telefone, setTelefone] = useState('');
+    const [telefones, setTelefones] = useState([]);
+    const [telefoneNumero, setTelefoneNumero] = useState('');
+    const [telefoneTipo, setTelefoneTipo] = useState('');
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [ehMedico, setEhMedico] = useState(false)
+    const [ativo, setAtivo] = useState(false)
     const history = useHistory();
     async function handleSubmit(e) {
         e.preventDefault();
-        const data = { cpfNumber, email, senha, nome, telefone }
+        setTelefones({
+            numero:telefoneNumero,
+            tipo:telefoneTipo,
+        })
+        setAtivo(true)
+        const data = { cpfNumber, email, senha, firstName,familyName, telefones,ehMedico,ativo }
         try {
             setLoading(true)
+            setEhMedico(false)
             if (senha === confirmsenha) {
                 const response = await api.post('/user', data);
                 login(response.data.token);
@@ -62,6 +73,7 @@ export default function Cadastro() {
             } else {
                 setLoading(false)
                 setError('Senhas Não conferem')
+                alert('Senhas Não conferem')
             }
         } catch (error) {
             setLoading(false)
@@ -82,14 +94,16 @@ export default function Cadastro() {
                     <Alert severity="error">
                         {error}
                     </Alert>}
-                {loading ? <ReactLoading type={'spin'} color={'#123'} height={'20%'} width={'20%'} /> : <></>}
+                {loading ? <ReactLoading type={'spin'} color={'#123'}  height={'20%'} width={'20%'} /> : <></>}
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         type="text"
                         variant="outlined"
                         fullWidth
                         label='CPF'
-                        placeholder='CPF*' minLength='11' maxLength='11' required
+                        placeholder='CPF*'
+                        inputProps={{ minLength:11 ,maxLength:11 }}
+                         required
                         value={cpfNumber}
                         onChange={e => setcpfNumber(e.target.value)} autoFocus
                     />
@@ -115,8 +129,20 @@ export default function Cadastro() {
                         id="nome"
                         label="Nome"
                         name="nome"
-                        value={nome}
-                        onChange={e => setNome(e.target.value)}
+                        value={firstName}
+                        onChange={e => setFirstName(e.target.value)}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        type='text'
+                        required
+                        fullWidth
+                        id="sobrenome"
+                        label="Sobrenome"
+                        name="sobrenome"
+                        value={familyName}
+                        onChange={e => setFamilyName(e.target.value)}
                     />
                     <TextField
                         variant="outlined"
@@ -126,11 +152,20 @@ export default function Cadastro() {
                         name="telefone"
                         label="Telefone"
                         type="text"
-                        maxLength='15' 
-                        id="telefone"
-                        onChange={e => setTelefone(e.target.value)}
-                        value={telefone}
+                        inputProps={{ maxLength:15 }}
+                        id="telefones"
+                        onChange={e => setTelefoneNumero(e.target.value)}
+                        value={telefoneNumero}
                     />
+                    <FormControl style={{ minWidth:'100%',margin:'auto'}}>
+                    <InputLabel id='telefoneTipoLabel'>Tipo de Telefone</InputLabel>
+                    <Select  variant="outlined" autoWidth  labelId='telefoneTipoLabel' id='telefoneTipo' value={telefoneTipo} onChange={e=>setTelefoneTipo(e.target.value)}>
+                        <MenuItem value={'residencial'}>Residencial</MenuItem>
+                        <MenuItem value={'comercial'}>Comercial</MenuItem>
+                        <MenuItem value={'celular'}>Celular</MenuItem>
+                        <MenuItem value={'whatsapp'}>Whatsapp</MenuItem>
+                    </Select>
+                    </FormControl>
                     <TextField
                         variant="outlined"
                         margin="normal"

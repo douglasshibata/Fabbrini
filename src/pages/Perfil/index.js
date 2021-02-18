@@ -10,17 +10,18 @@ import { Alert } from '@material-ui/lab';
 
 function Profile(props) {
     const [items, setItems] = useState([])
-    const [ehMedico, setEhMedico] = useState(items.map((value, index) => value.ehMedico ));
+    const [ehMedico, setEhMedico] = useState(false);
     const [paciente, setPaciente] = useState(true);
-    console.log(items);
     useEffect(() => {
-        const cpf = localStorage.getItem('cpfUser')
+        const idUsuario = localStorage.getItem('_idUsuario')
         const getItems = async () => {
             try {
-                const response = await api.get('/perfil', { headers: { cpfUser: cpf } });
-                setItems(response.data)
+                const response = await api.get('/perfil', { headers: { _id: idUsuario } });
+                console.log(response.data);
+                setItems(response.data.user)
+                setEhMedico(response.data.user.ehMedico)
             } catch (error) {
-                console.log(error);
+                console.log(error.response);
                 alert("Erro em carregar os dados")
             }
         }
@@ -32,13 +33,13 @@ function Profile(props) {
         setItems(newArray)
     }
 
-    localStorage.setItem('nome', items.nome);
-    localStorage.setItem('ehMedico', items.ehMedico);
+    localStorage.setItem('nome', items.firstName);
+    localStorage.setItem('ehMedico', ehMedico);
     return (
         <>
             <Navbar />
             <Container>
-                <ChatBot />
+                {/* <ChatBot /> */}
 
 
                 <FormControlLabel

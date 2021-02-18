@@ -12,11 +12,11 @@ function App(props) {
     const [items, setItems] = useState([])
     const ehMedico = localStorage.getItem('ehMedico');
     useEffect(() => {
-        const cpf = localStorage.getItem('cpfUser')
+        const cpf = localStorage.getItem('cpfNumber')
         const getItems = async () => {
             try {
-                const response = await api.get('/agendaCompleta', { headers: { cpfUser: cpf } });
-                setItems(response.data.rows)
+                const response = await api.get('/agenda');
+                setItems(response.data)
             } catch (error) {
                 console.log(error);
                 alert("Erro em carregar os dados")
@@ -39,7 +39,7 @@ function App(props) {
             <Navbar />
             <Container>
                 <h1 style={{ margin: 20 }}>Agenda</h1>
-                {ehMedico === 'true'?
+                {/* {ehMedico === 'true'?
                 <>
                 <ModalForm addItemToState={addItemToState} />
                 <DataTable items={items} updateState={updateState} /> 
@@ -48,7 +48,7 @@ function App(props) {
                     data={items}>
                     <GetAppIcon color='primary'/>Download Agenda
                 </CSVLink>
-                </>:  <DataTable items={items}/>  }
+                </>:  <DataTable items={items}/>  } */}
             </Container>
             <ChatBot/>
         </>

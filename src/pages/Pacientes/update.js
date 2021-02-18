@@ -5,7 +5,7 @@ import api from "../../services/api";
 function AddEditForm(props) {
   const [form, setValues] = useState({
     id: 0,
-    cpfUser: '',
+    cpfNumber: '',
     nome: '',
     email: '',
     telefone: '',
@@ -23,7 +23,7 @@ function AddEditForm(props) {
     e.preventDefault()
     try {
       const response = await api.post('/user', {
-        cpfUser: form.cpfUser,
+        cpfNumber: form.cpfNumber,
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
@@ -45,7 +45,7 @@ function AddEditForm(props) {
         telefone: form.telefone,
         password: form.password,
         ativo: form.ativo
-      }, { headers: { cpfUser: form.cpfUser, } });
+      }, { headers: { cpfNumber: form.cpfNumber, } });
       if (response) setTimeout(function () { alert('Atualizado Com sucesso'); window.location.reload() }, 2000)
     } catch (error) {
       console.log(error);
@@ -56,16 +56,16 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { id, cpfUser, nome, email, telefone, password, ativo } = props.item
-      setValues({ id, cpfUser, nome, email, telefone, password, ativo })
+      const { id, cpfNumber, nome, email, telefone, password, ativo } = props.item
+      setValues({ id, cpfNumber, nome, email, telefone, password, ativo })
     }
   }, [props.item])
 
   return (
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
       <FormGroup>
-        <Label for="cpfUser">CPF</Label>
-        <Input type="text" name="cpfUser" id="cpfUser" onChange={onChange} value={form.cpfUser === null ? '' : form.cpfUser} required maxLength='11' minLength='11' />
+        <Label for="cpfNumber">CPF</Label>
+        <Input type="text" name="cpfNumber" id="cpfNumber" onChange={onChange} value={form.cpfNumber === null ? '' : form.cpfNumber} required maxLength='11' minLength='11' />
       </FormGroup>
       <FormGroup>
         <Label for="nome">Nome</Label>

@@ -19,7 +19,7 @@ const EditProfissional = (props) => {
   const [especialidade, setEspecialidade] = useState(null);
   const [ativo, setAtivo] = useState('');
 
-  const cpfUser = localStorage.getItem('cpfUser');
+  const cpfNumber = localStorage.getItem('cpfNumber');
 
   const submitFormEdit = async e => {
     e.preventDefault()
@@ -35,7 +35,7 @@ const EditProfissional = (props) => {
         registro: registro,
         especialidade: especialidade,
         ehMedico: true,
-      }, { headers: { cpfUser: cpfUser, } });
+      }, { headers: { cpfNumber: cpfNumber, } });
       if (response) setTimeout(function () { alert('Atualizado Com sucesso'); window.location.reload() }, 200)
     } catch (error) {
       console.log(error.response.data.error.message);

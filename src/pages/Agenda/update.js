@@ -104,10 +104,10 @@ function AddEditForm(props) {
             renderOption={(option) => (
               <React.Fragment>
                 {option.ehMedico ?
-                  <>{option.cpfUser} - {option.nome} <br /> {option.especialidade} </> : ""}
+                  <>{option.cpfNumber} - {option.nome} <br /> {option.especialidade} </> : ""}
               </React.Fragment>
             )}
-            onChange={(event, value) => setcpfProfissional(value.cpfUser)}
+            onChange={(event, value) => setcpfProfissional(value.cpfNumber)}
 
             renderInput={(params) => <TextField {...params} label="Profissionais" variant="outlined" />}
           />
@@ -118,10 +118,10 @@ function AddEditForm(props) {
             getOptionLabel={(option) => option.nome}
             renderOption={(option) => (
               <React.Fragment>
-                {option.cpfUser} - {option.nome}
+                {option.cpfNumber} - {option.nome}
               </React.Fragment>
             )}
-            onChange={(event, value) => setCpfPaciente(value.cpfUser)}
+            onChange={(event, value) => setCpfPaciente(value.cpfNumber)}
             renderInput={(params) => <TextField {...params} label="Pacientes" variant="outlined" />}
           />
           <p style={{ marginTop: 15, marginBottom: 20 }}>

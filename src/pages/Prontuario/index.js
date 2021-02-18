@@ -8,10 +8,10 @@ import ChatBot from '../Chatbot';
 function Prontuario(props) {
     const [items, setItems] = useState([])
     useEffect(() => {
-        const cpf = localStorage.getItem('cpfUser')
+        const cpf = localStorage.getItem('cpfNumber')
         const getItems = async () => {
             try {
-                const response = await api.get('/prontuario', { headers: { cpfUser: cpf } });
+                const response = await api.get('/prontuario', { headers: { cpfNumber: cpf } });
                 setItems(response.data.rows)
             } catch (error) {
                 console.log(error);

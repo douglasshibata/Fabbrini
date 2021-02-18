@@ -14,6 +14,8 @@ import About from './pages/About';
 import Help from "./pages/Help";
 import Prontuario from "./pages/Prontuario";
 import DetalheProfissional from "./pages/ListaProfissionais/detalhe";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -33,6 +35,8 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={LandingPage} />
       <Route path='/cadastrar' component={CadastrarPage} />
+      <Route path='/reset-password/:token' component={ResetPassword} />
+      <Route path='/forgot-password' component={ForgotPassword} />
       <PrivateRoute path='/main' component={MainPage}/>
       <PrivateRoute path='/listaProfissionais' component={ListaProfissionais}/>
       <PrivateRoute path='/pacientes' component={ListaPacientes}/>

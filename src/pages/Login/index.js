@@ -20,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     link: {
-        width: '191px',
-        height: '21px',
-        left: '859px',
-        top: '509px',
         fontSamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 300,
@@ -66,6 +62,7 @@ export default function SignIn() {
         try {
             setLoading(true)
             const response = await api.post('/sessions', data);
+            localStorage.setItem("_idUsuario",response.data.user._id)
             login(response.data.token);
             history.push('/perfil')
         } catch (error) {
@@ -113,9 +110,14 @@ export default function SignIn() {
                     Entrar
           </Button>
                 <Grid container>
-                    <Grid item>
+                    <Grid item xs>
                         <Link to="/cadastrar" variant="body2" className={classes.link}>
-                            Clique aqui para se Cadastrar
+                            Cadastrar-se
+                        </Link>
+                    </Grid>
+                    <Grid item xs>
+                        <Link to="/forgot-password" variant="body2" className={classes.link}>
+                            Esqueci a senha
                         </Link>
                     </Grid>
                 </Grid>

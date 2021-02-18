@@ -15,7 +15,7 @@ function DataTable(props){
       if(item.ehPaciente){
       return (
         <TableRow key={item.id}>
-{/*           <TableCell align='center'>{item.cpfUser}</TableCell>
+{/*           <TableCell align='center'>{item.cpfNumber}</TableCell>
  */}          <TableCell align='center'>{item.nome}</TableCell>
           <TableCell align='center'>{item.email}</TableCell>
           <TableCell align='center'>{item.telefone}</TableCell>

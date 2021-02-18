@@ -29,10 +29,14 @@ function DataProfessional(props) {
         avatar={<Avatar aria-label={value.nome} className={classes.avatar} />}
         title={value.nome}
         subheader={value.email}
+        action={
+
+            <ModalProfessional buttonLabel="Editar" item={value} updateState={props.updateState} />
+        }
     />
     <CardContent>
         <Typography variant="h6" component="h3">
-            <p>CPF: {value.cpfUser}</p>
+            <p>CPF: {value.cpfNumber}</p>
         </Typography>
         <Typography variant="h6" component="h3">
             <p>{value.conselho} - {value.ufConselho}</p>
@@ -49,7 +53,6 @@ function DataProfessional(props) {
         <Typography variant="h6" component="h3">
             <p>STATUS: {value.ativo ? `ATIVO` : `INATIVO`}</p>
         </Typography>
-        <ModalProfessional buttonLabel="Editar" item={value} updateState={props.updateState} />
     </CardContent>
 </Card>
   )); 
